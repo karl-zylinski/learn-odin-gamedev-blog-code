@@ -101,6 +101,42 @@ main :: proc() {
     }
 
     rl.CloseWindow()
+}
+
+PlayerSize :: rl.Vector2 {64, 64}
+
+Player :: struct {
+    pos: rl.Vector2,
+}
+
+update_player :: proc(p: ^Player) {
+    if rl.IsKeyDown(.LEFT) {
+        p.pos.x -= 400 * rl.GetFrameTime()
+    } else if rl.IsKeyDown(.RIGHT) {
+        p.pos.x += 400 * rl.GetFrameTime()
+    }
+}
+
+draw_player :: proc(p: Player) {
+    rl.DrawRectangleV(p.pos, {64, 64}, rl.GREEN)
+}
+
+main :: proc() {
+    rl.InitWindow(1280, 720, "My First Game")
+
+    player := Player {
+        pos = {640, 320},
+    }
+
+    for !rl.WindowShouldClose() {
+        rl.BeginDrawing()
+        rl.ClearBackground(rl.BLUE)
+        update_player(&player)
+        draw_player(player)
+        rl.EndDrawing()
+    }
+
+    rl.CloseWindow()
 }*/
 
 PlayerSize :: rl.Vector2 {64, 64}
@@ -119,16 +155,15 @@ update_player :: proc(p: ^Player) {
         p.vel.x = 0
     }
 
-    if rl.IsKeyPressed(.SPACE) {
-        p.vel.y = -600
-    }
-
     p.vel.y += 2000 * rl.GetFrameTime()
-
     p.pos += p.vel * rl.GetFrameTime()
 
     if p.pos.y > f32(rl.GetScreenHeight()) - PlayerSize.y {
         p.pos.y = f32(rl.GetScreenHeight()) - PlayerSize.y
+
+        if rl.IsKeyPressed(.SPACE) {
+            p.vel.y = -600
+        }
     }
 }
 
