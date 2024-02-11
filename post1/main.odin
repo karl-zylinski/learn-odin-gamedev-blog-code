@@ -3,7 +3,7 @@ package game
 import rl "vendor:raylib"
 
 main :: proc() {
-    rl.InitWindow(WindowWidth, WindowHeight, "My First Game")
+    rl.InitWindow(1280, 720, "My First Game")
 
     for !rl.WindowShouldClose() {
         rl.BeginDrawing()
