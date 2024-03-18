@@ -6,7 +6,7 @@ main :: proc() {
     rl.InitWindow(1280, 720, "My First Game")
 
     for !rl.WindowShouldClose() {
-        rl.BegunDrawing()
+        rl.BeginDrawing()
         rl.ClearBackground(rl.BLUE)
         rl.EndDrawing()
     }
